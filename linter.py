@@ -124,7 +124,7 @@ class Pylint(PythonLinter):
         'E1124': r"Parameter '(?P<near>.*)' passed as both positional and keyword argument",
         'E1310': r"Suspicious argument in \S+\.(?P<near>.*) call",
         'F0220': r"failed to resolve interfaces implemented by \S+ \((?P<near>.*)\)",
-        'F0401': r"Unable to import '(?P<near>.*)'",
+        'E0401': r"Unable to import '(?P<near>.*)'",
         'I0010': r"Unable to consider inline option '(?P<near>.*)'",
         'I0011': r"Locally disabling (?P<near>.*)",
         'I0012': r"Locally enabling (?P<near>.*)",
@@ -136,11 +136,11 @@ class Pylint(PythonLinter):
         'W0402': r"Uses of a deprecated module '(?P<near>.*)'",
         'W0403': r"Relative import '(?P<near>.*)', should be",
         'W0404': r"Reimport '(?P<near>.*)'",
-        'W0511': r"(?P<near>.*)",
+        'W0511': r"(?P<near>.*)\s",
         'W0512': r'Cannot decode using encoding ".*", unexpected byte at position (?P<col>\d+)',
         'W0601': r"Global variable '(?P<near>.*)' undefined",
         'W0602': r"Using global for '(?P<near>.*)' but",
-        'W0611': r"Unused import (?P<near>.*)",
+        'W0611': r"Unused import (?P<near>.*)\s",
         'W0621': r"Redefining name '(?P<near>.*)' from outer scope",
         'W0622': r"Redefining built-in '(?P<near>.*)'",
         'W0623': r"Redefining name '(?P<near>.*)' from object '.*' in exception handler",
@@ -151,6 +151,9 @@ class Pylint(PythonLinter):
 
         # does not work : 'l' is too short..
         # 'W0332': r'Use of "(?P<near>.*)" as long integer identifier',
+
+        'R0205': r'(?P<near>object)',
+
     }
     # a static map of codes to 'near' words :
     # some errors always relate to the same keyword.
@@ -282,5 +285,8 @@ class Pylint(PythonLinter):
                 # if it is an unknown error code, force it if column = 0
                 if col == 0:
                     col = None
+
+            if code:
+                message = "[{}] {}".format(code, message)
 
         return match, line, col, error, warning, message, near
