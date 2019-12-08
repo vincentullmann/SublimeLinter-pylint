@@ -4,4 +4,13 @@ This linter plugin for SublimeLinter provides an interface to pylint.
 
 Please read the installation instructions at:
 
+
+Original:
 https://github.com/SublimeLinter/SublimeLinter-pylint
+
+Changed:
+https://github.com/vincentullmann/SublimeLinter-pylint
+
+
+
+
